@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuessMe | Number Guessing Game</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-content">
+            <div class="loader-container">
+                <div class="loader-outer"></div>
+                <div class="loader-middle"></div>
+                <div class="loader-inner"></div>
+                <div class="loader-dot"></div>
+            </div>
+            <h2 class="loading-title">Loading Game...</h2>
+            <div class="loading-progress">
+                <div class="loading-bar" id="loading-bar"></div>
+            </div>
+            <div class="loading-tips">
+                <p id="loading-tip">Tip: The harder the difficulty, the fewer hints you get!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-dice"></i>
+                <span>GuessMe</span>
+            </div>
+            <nav>
+                <input type="checkbox" id="nav-toggle" class="nav-toggle">
+                <label for="nav-toggle" class="nav-toggle-label">
+                    <i class="fas fa-bars"></i>
+                </label>
+                <ul class="nav-menu">
+                    <li><a href="#game-section" class="active">Game</a></li>
+                    <li><a href="#how-to-play">How to Play</a></li>
+                </ul>
+            </nav>
+            <div class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="game-section">
+            <div class="game-container reveal-element">
+                <h1>Number Guessing Game</h1>
+                <p class="game-description">Try to guess a number between 1 and 100</p>
+
+                <div class="difficulty-selector">
+                    <h3>Select Difficulty:</h3>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn active" data-range="100" data-attempts="10" data-hints="1">Easy</button>
+                        <button class="difficulty-btn" data-range="100" data-attempts="7" data-hints="1">Medium</button>
+                        <button class="difficulty-btn" data-range="100" data-attempts="5" data-hints="1">Hard</button>
+                    </div>
+                </div>
+
+                <div class="game-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Range:</span>
+                        <span class="stat-value" id="range-display">1-100</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Max Attempts:</span>
+                        <span class="stat-value" id="max-attempts-display">10</span>
+                    </div>
+                </div>
+
+                <button id="start-game-button" class="start-game">Start Game</button>
+
+                <div class="game-area" id="game-area" style="display: none;">
+                    <div class="message-area" id="message">
+                        <span>Guess a number between 1 and 100</span>
+                        <div id="reaction-gif" class="reaction-gif"></div>
+                    </div>
+
+                    <div class="input-section">
+                        <input type="number" id="guess-input" placeholder="Enter your guess..." min="1" max="100">
+                        <button id="guess-button">Guess</button>
+                    </div>
+
+                    <div class="attempts-section">
+                        <div class="attempts">
+                            Attempts: <span id="attempts-count">0</span>/<span id="max-attempts">10</span>
+                        </div>
+                        <div class="timer" id="timer">00:30</div>
+                    </div>
+
+                    <div class="progress-container" id="progress-container">
+                        <div class="progress-labels">
+                            <span>Cold</span>
+                            <span>Hot</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="hint-section">
+                        <button id="hint-button" class="hint-button">
+                            <i class="fas fa-lightbulb"></i> Get a Hint
+                            <span class="hint-count" id="hint-count">3 left</span>
+                        </button>
+                        <div id="hint-message" class="hint-message"></div>
+                    </div>
+
+                    <h3 class="history-title">Previous Guesses:</h3>
+                    <div class="guess-history" id="guess-history"></div>
+
+                    <div class="action-buttons">
+                        <button id="new-game-button" class="new-game">New Game</button>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Details Section -->
+        <section id="how-to-play">
+            <div class="game-details reveal-element">
+                <h2>How to Play</h2>
+                <div class="instructions-card">
+                    <div class="instruction-item">
+                        <div class="instruction-icon">
+                            <i class="fas fa-dice-one"></i>
+                        </div>
+                        <div class="instruction-text">
+                            <h3>Guess the Number</h3>
+                            <p>Enter a number between 1 and 100 in the input field.</p>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-icon">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        <div class="instruction-text">
+                            <h3>Hot or Cold</h3>
+                            <p>The game will tell you if your guess is too high or too low.</p>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="instruction-text">
+                            <h3>Win the Game</h3>
+                            <p>Find the correct number before running out of attempts!</p>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="instruction-text">
+                            <h3>Celebrate Your Victory!</h3>
+                            <p>Win the game and enjoy a confetti celebration!</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>GuessMe</h3>
+                <p>A fun number guessing game to test your luck.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#game-section">Game</a></li>
+                    <li><a href="#how-to-play">Rules</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect On</h3>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/amanmishra107/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://x.com/AmanMishra107" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/aman.mishra__107/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://github.com/AmanMishra107" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 GuessMe. All rights reserved. | <a href="https://www.linkedin.com/in/amanmishra107/" target="_blank" rel="noopener noreferrer">Aman Mishra</a></p>
+        </div>
+    </footer>
+
+    <!-- Confetti Canvas for Win Animation -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Win Modal -->
+    <div class="modal" id="win-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="trophy-container">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2>Congratulations!</h2>
+            <p id="win-message">You guessed the number in <span id="win-attempts">0</span> attempts!</p>
+            <div class="stats-container">
+                <div class="stat">
+                    <span class="stat-number" id="win-time">00:00</span>
+                    <span class="stat-label">Time</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="win-score">0</span>
+                    <span class="stat-label">Score</span>
+                </div>
+            </div>
+            <button id="play-again-btn">Play Again</button>
+            <button id="share-btn"><i class="fas fa-share-alt"></i> Share Result</button>
+        </div>
+    </div>
+
+
+    <div class="notifications" id="notifications"></div>
+
+    <!-- Audio elements for sound effects -->
+    <audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568.wav" preload="auto"></audio>
+    <audio id="win-sound" src="https://assets.mixkit.co/active_storage/sfx/1689/1689.wav" preload="auto"></audio>
+    <audio id="lose-sound" src="https://assets.mixkit.co/active_storage/sfx/3/3.wav" preload="auto"></audio>
+    <audio id="hint-sound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571.wav" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
